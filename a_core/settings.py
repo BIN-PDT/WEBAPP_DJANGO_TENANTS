@@ -52,6 +52,7 @@ SHARED_APPS = [
     "django.contrib.staticfiles",
     "django_cleanup.apps.CleanupConfig",
     "django_htmx",
+    "colorfield",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -230,6 +231,18 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_URL = "media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
+
+MULTITENANT_RELATIVE_MEDIA_ROOT = "tenants/%s"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "a_home.storage.CustomSchemaStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

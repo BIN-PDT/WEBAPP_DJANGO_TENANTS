@@ -11,9 +11,9 @@
 				class="flex items-center gap-2">
 				<img
 					class="w-8 mr-1 -mt-1"
-					src="{% static "images/logo.png" %}"
+					src="{% if branding.logo %}{{ branding.logo.url }}{% else %}{% static "images/logo.png" %}{% endif %}"
 					alt="" />
-				<span class="font-1 text-2xl title-blip">
+				<span class="font-1 text-2xl title-blip {% if branding.color %}text-[{{ branding.color }}]{% endif %}">
 					{% if request.tenant %}
 						{{ request.tenant.name }}
 					{% else %}

@@ -329,7 +329,8 @@
 	</head>
 	<body class="bg-gray-100">
 		{% include "includes/messages.html" %}
-		{% include "includes/header.html" %}
+		{% load header %}
+		{% header_view request %}
 
 		<div class="{% block control_class %}{% endblock %}">
 			{% block layout %}{% endblock %}
