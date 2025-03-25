@@ -41,7 +41,9 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-INSTALLED_APPS = [
+SHARED_APPS = [
+    "django_tenants",
+    "a_tenant_manager",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -61,7 +63,30 @@ INSTALLED_APPS = [
     "a_user",
 ]
 
+TENANT_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django_cleanup.apps.CleanupConfig",
+    "django_htmx",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.github",
+    "allauth.socialaccount.providers.twitter",
+    "allauth.socialaccount.providers.facebook",
+    "a_home",
+    "a_user",
+]
+
+INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
 MIDDLEWARE = [
+    "django_tenants.middleware.main.TenantMainMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -144,7 +169,7 @@ SOCIALACCOUNT_ADAPTER = "a_user.adapters.CustomSocialAccountAdapter"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django_tenants.postgresql_backend",
         "NAME": env("POSTGRES_DATABASE"),
         "USER": env("POSTGRES_USERNAME"),
         "PASSWORD": env("POSTGRES_PASSWORD"),
@@ -152,6 +177,14 @@ DATABASES = {
         "PORT": env("POSTGRES_PORT"),
     }
 }
+
+DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
+
+TENANT_MODEL = "a_tenant_manager.Tenant"
+
+TENANT_DOMAIN_MODEL = "a_tenant_manager.Domain"
+
+SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
 
 
 # Password validation
