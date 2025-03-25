@@ -13,7 +13,13 @@
 					class="w-8 mr-1 -mt-1"
 					src="{% static "images/logo.png" %}"
 					alt="" />
-				<span class="font-1 text-2xl title-blip">Django Tenants</span>
+				<span class="font-1 text-2xl title-blip">
+					{% if request.tenant %}
+						{{ request.tenant.name }}
+					{% else %}
+						Django Tenants
+					{% endif %}
+				</span>
 			</a>
 		</logo>
 

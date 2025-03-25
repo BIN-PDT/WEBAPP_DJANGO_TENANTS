@@ -100,6 +100,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "a_core.urls"
 
+PUBLIC_SCHEMA_URLCONF = "a_core.urls_public"
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
