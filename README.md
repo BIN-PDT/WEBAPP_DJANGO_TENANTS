@@ -45,7 +45,7 @@ pip install -r requirements.txt
 **4. DATABASE**
 
 ```
-python manage.py migrate
+python manage.py migrate_schemas --shared
 ```
 
 **5. RUN APPLICATION**
